@@ -1,0 +1,138 @@
+swagger: "2.0"
+info:
+  description: " Api design for:
+        - endpoint to set the forecast for a specific city
+        - endpoint to read the forecast for a specific city"
+  version: "1.0.0"
+  title: "POINT 2 "
+  contact:
+    email: "solano.luca@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "#"
+basePath: "/v3"
+schemes:
+- "https"
+- "http"
+paths:
+  /city/{cityId}/forecast:
+    post:
+      tags:
+      - "cityForecast"
+      summary: "Store forecast daily for city"
+      description: ""
+      operationId: "postDailyCityForecast"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cityId"
+        in: "path"
+        description: "city Id"
+        required: true
+        type: "integer"
+      - name: "code"
+        in: "formData"
+        description: "Forecast Code"
+        required: true
+        type: "string"
+      - name: "date"
+        in: "formData"
+        description: "Date"
+        required: true
+        type: "string"
+        format: "date"
+
+      responses:
+        "404":
+          description: "Not Found City id"
+          schema:
+            $ref: "#/definitions/ForecastError"
+        "201":
+          description: "Insert forecast"  
+          schema:
+            $ref: "#/definitions/ForecastInsertSuccess"
+        "400":
+          description: "Bad Params (code or date not valid)"
+          schema:
+            $ref: "#/definitions/ForecastError"
+    get:
+      tags:
+      - "cityForecast"
+      summary: "Get forecast daily for city"
+      description: ""
+      operationId: "getDailyCityForecast"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cityId"
+        in: "path"
+        description: "city Id"
+        required: true
+        type: "integer"
+      - name: "date"
+        in: "query"
+        description: "Forecast date"
+        required: true
+        type: "string"
+      - name: "lan"
+        in: "query"
+        description: "Language (Forecast label)"
+        required: false
+        type: "string"
+
+      responses:
+        "404":
+          description: "Not Found Forecast"
+          schema:
+            $ref: "#/definitions/ForecastError"
+        "200":
+          description: "get city forecast"  
+          schema:
+            $ref: "#/definitions/ForecastGetSuccess"
+        "400":
+          description: "Bad Params (cityId or date not valid)"
+          schema:
+            $ref: "#/definitions/ForecastError"        
+definitions:
+  ForecastGetSuccess:
+    type: "object"
+    properties:
+      cityId:
+        type: "integer"
+      cityName:
+        type: "string"  
+      code:
+        type: "string"
+      label:
+        type: "string"  
+      date:
+        type: "string"    
+    xml:
+      name: "ForecastGetSuccess"
+  ForecastError:
+    type: "object"
+    properties:
+      error:
+        type: "integer"
+      message:
+        type: "string"
+    xml:
+      name: "ForecastInsertError"
+  ForecastInsertSuccess:
+    type: "object"
+    properties:
+      cityId:
+        type: "integer"
+        format: "int64"
+      code:
+        type: "string"
+      date:
+        type: "string"
+        format: "date"
+    xml:
+      name: "ForecastInsertSuccess"
