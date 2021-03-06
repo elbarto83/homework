@@ -1,0 +1,42 @@
+{    
+    "name": "cliapp/cliapp",
+    "type": "library",
+    "description": "Application that: gets the list of the cities from Musement's API and for each city gets the forecast for the next 2 days",
+    "keywords": ["framework","php","api"],
+    "homepage": "https://github.com/elbarto83/homework",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luca Solano",
+            "email": "solano.luca@gmail.com",
+            "homepage": "http://solabs.it"
+        }
+        
+    ],
+    "autoload": {
+        "psr-4": {
+             "CliApp\\": "./src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CliApp\\Tests\\": "./tests"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.2",
+        "symfony/dotenv": "^5.2",
+        "monolog/monolog": "^2.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9",
+        "squizlabs/php_codesniffer": "*",
+        "pcov/clobber": "^2.0"
+    },
+    "scripts": {
+        "phpcs": "./vendor/bin/phpcs ./src --report=code --standard=./phpcs.xml",
+        "phpcbf":"./vendor/bin/phpcbf ./src --standard=./phpcs.xml",
+        "testunit": "./vendor/bin/phpunit tests",
+        "codecoverage": "./vendor/bin/phpunit tests --coverage-text=./logs/report.txt  && cat ./logs/report.txt"
+    }
+}
