@@ -59,6 +59,12 @@ Launch command from shell:
 composer run-script codecoverage
 ```
 
+##### Tail logs
+Launch command from shell:
+```bash
+tail -f ./logs/cli.log
+```
+
 ### License
 
 Cliapp is  open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
